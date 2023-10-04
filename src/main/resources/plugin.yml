@@ -4,5 +4,6 @@ main: me.cubecrafter.migrator.HypixelMigrator
 api-version: 1.13
 author: CubeCrafter
 description: Migrate your Hypixel layout to BedWars1058!
-depend:
+softdepend:
   - BedWars1058
+  - BedWars2023

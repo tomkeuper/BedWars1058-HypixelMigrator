@@ -1,7 +1,5 @@
 package me.cubecrafter.migrator.core;
 
-import com.andrei1058.bedwars.shop.quickbuy.PlayerQuickBuyCache;
-import com.andrei1058.bedwars.shop.quickbuy.QuickBuyElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import me.cubecrafter.migrator.HypixelMigrator;
@@ -14,8 +12,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.UUID;
 import java.util.function.Consumer;
 
@@ -56,19 +52,9 @@ public class LayoutMigrator {
             }
             String layout = response.getAsJsonObject("player").getAsJsonObject("stats").getAsJsonObject("Bedwars").get("favourites_2").getAsString();
             String[] items = layout.split(",");
-            PlayerQuickBuyCache cache = PlayerQuickBuyCache.getQuickBuyCache(player.getUniqueId());
-            Iterator<String> it = Arrays.stream(items).iterator();
-            for (int i = 19; i < 44; i++) {
-                if (i == 26 || i == 27 || i == 35 || i == 36) continue;
-                String item = it.next();
-                if (item.equals("null")) {
-                    cache.setElement(i, null);
-                } else {
-                    String category = LayoutItem.matchItem(item).getCategory();
-                    cache.setElement(i, new QuickBuyElement(category, i).getCategoryContent());
-                }
-            }
-            cache.pushChangesToDB();
+
+            plugin.getBedWars().setQuickBuyCache(player,items);
+
             TextUtil.sendMessage(player, config.getString("messages.migration-success"));
         });
     }

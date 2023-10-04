@@ -41,7 +41,7 @@ public class ItemBuilder {
     }
 
     public ItemBuilder setTag(String key, String value) {
-        item = HypixelMigrator.getInstance().getBedWars().getVersionSupport().setTag(item, key, value);
+        item = HypixelMigrator.getInstance().getBedWars().setNmsTag(item, key, value);
         return this;
     }
 
@@ -61,7 +61,7 @@ public class ItemBuilder {
     }
 
     public static String getTag(ItemStack item, String key) {
-        String tag = HypixelMigrator.getInstance().getBedWars().getVersionSupport().getTag(item, key);
+        String tag = HypixelMigrator.getInstance().getBedWars().getNmsTag(item, key);
         return tag == null ? "" : tag;
     }
 
